@@ -1,0 +1,41 @@
+name: e2etest
+on:
+  #16:30に実行
+  schedule:
+    - cron: "*/8 * * * *"
+  #push:
+  #branches: [main]
+  #pull_request:
+  #branches: [main, e2e/test, develop]
+
+jobs:
+  test:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      # リポジトリチェックアウト（Actionsのジョブ内でリポジトリ内のコードやファイルにアクセスするため）
+      - uses: actions/checkout@v4
+
+      # Node.jsをセットアップ（バージョンは最新のもの）
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      # アプリケーションの依存関係をインストール
+      - name: Install dependencies
+        run: npm install -g yarn && yarn
+
+      #playwrightインストール
+      - name: Install Playwright Browsers
+        run: yarn playwright install --with-deps
+
+      #gaugeインストール
+      - name: Install Gauge
+        run: npm install -g @getgauge/cli
+
+      #Nodeプロジェクト起動
+      - name: Start Node project
+        run: npm start &
+
+      #E2Eテスト実行
+      - name: Run e2e tests
+        run: yarn run:e2e
