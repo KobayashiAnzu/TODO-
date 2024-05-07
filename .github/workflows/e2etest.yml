@@ -1,7 +1,8 @@
 name: e2etest
 on:
-  schedule:
-    - cron: "10 9 * * *"
+  [workflow_dispatch]
+  #schedule:
+  # - cron: "10 9 * * *"
   #push:
   #branches: [main]
   #pull_request:
