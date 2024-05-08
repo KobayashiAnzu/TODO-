@@ -1,17 +1,17 @@
 name: e2etest
 on:
-  [workflow_dispatch]
+  #[workflow_dispatch]
   #schedule:
   # - cron: "10 9 * * *"
-  #push:
-  #branches: [main]
-  #pull_request:
-  #branches: [main, e2e/test, develop]
+  pull_request:
+    branches: [main, test]
+    types: [closed]
 
 jobs:
   test:
     timeout-minutes: 5
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
     steps:
       # リポジトリチェックアウト（Actionsのジョブ内でリポジトリ内のコードやファイルにアクセスするため）
       - uses: actions/checkout@v4
