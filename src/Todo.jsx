@@ -53,6 +53,7 @@ export const Todo = () => {
         onClickComplete={onClickComplete}
         onClickDelete={onClickDelete}
       />
+      {/* 完了 */}
       <div className="complete-area">
         <p className="title">完了のTODO</p>
         <ul>
